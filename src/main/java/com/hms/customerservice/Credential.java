@@ -19,6 +19,17 @@ public class Credential {
     @Column(name = "password", length = 50)
     private String password;
 
+    @Column(name = "name", length = Integer.MAX_VALUE)
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public UUID getId() {
         return id;
     }
