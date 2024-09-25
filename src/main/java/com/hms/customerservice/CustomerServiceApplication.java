@@ -1,4 +1,4 @@
-package org.example.customerservice;
+package com.hms.customerservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
