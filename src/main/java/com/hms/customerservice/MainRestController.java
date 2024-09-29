@@ -1,6 +1,7 @@
 package com.hms.customerservice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.hms.customerservice.kafka.KafkaProducer;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.sql.Update;
@@ -20,14 +21,17 @@ public class MainRestController {
     @Autowired
     private CredentialRepository credentialRepository;
 
+    @Autowired
+    private KafkaProducer kafkaProducer;
+
     @GetMapping("/register")
-    public ResponseEntity<CredentialResponse> register() {
+    public ResponseEntity<CredentialResponse> register() throws JsonProcessingException {
         Credential credential = new Credential();
         credential.setId(UUID.randomUUID());
         credential.setPassword(RandomStringGenerator.generateRandomString(12));
         credentialRepository.save(credential);
 
-        //producer.pubSocialEvent_1("LOGIN", credential.getId());
+        //kafkaProducer.pubRegisterEvent(credential.getId());
         CredentialResponse credentialResponse = new CredentialResponse(LOGIN_MESSAGE, credential);
         return ResponseEntity.ok(credentialResponse);
     }
